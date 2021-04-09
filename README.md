@@ -1,4 +1,4 @@
-# fhem-RCT
+# FHEM-RCT
 
 FHEM Module based on RCT Client: https://github.com/svalouch/python-rctclient
 
