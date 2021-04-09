@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.0.16";
+my $version = "0.0.17";
 
 my %gets = (
   "version:noArg"     => "",
@@ -17,6 +17,11 @@ my %commands;
 
 $commands{"battery_soc"} = "battery.soc";
 $commands{"battery_soh"} = "battery.soh";
+$commands{"battery_soc_target"} = "battery.soc_target";
+$commands{"battery_soc_target_low"} = "battery.soc_target_low";
+$commands{"battery_temperature"} = "battery.temperature";
+$commands{"battery_efficiency"} = "battery.efficiency";
+$commands{"battery_used_energy"} = "battery.used_energy";
 
 $commands{"power_real"} = "g_sync.p_ac_sum";
 $commands{"power_battery"} = "g_sync.p_acc_lp";
@@ -266,7 +271,7 @@ sub Attr($@) {
     }
     elsif ( $cmd eq "del" ) {
       $hash->{INTERVAL}=10;
-      Log3 $name, 4, "RCTt ($name): set new pollInterval to 1800 (standard)";
+      Log3 $name, 4, "RCT ($name): set new pollInterval to 1800 (standard)";
     }
     RCT::RestartGetTimer($hash);
   }
