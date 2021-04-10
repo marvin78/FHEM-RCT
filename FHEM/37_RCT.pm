@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.1.2";
+my $version = "0.1.3";
 
 my %gets = (
   "version:noArg"     => "",
@@ -353,7 +353,7 @@ sub RCT_Initialize($) {
 	$hash->{AttrList}     =   "disable:1,0 ".
                             "disabledForIntervals ".
                             "pollInterval ".
-                            "values ".
+                            "values:textField-long ".
                             $readingFnAttributes;
                             
   $hash->{NotifyOrderPrefix} = "14-";    # order number NotifyFn
@@ -553,6 +553,21 @@ sub Attr($@) {
     elsif ( $cmd eq "del" ) {
       $hash->{INTERVAL}=10;
       Log3 $name, 4, "RCT ($name): set new pollInterval to 1800 (standard)";
+    }
+    RCT::RestartGetTimer($hash);
+  }
+  
+  if ( $attrName eq "values" ) {
+    if ( $cmd eq "set" ) {
+      if (!eval{decode_json($attrVal)}) {
+        return "$name: values has to be valid JSON";  
+        Log3 $name, 4, "RCT ($name): set new values to $attrVal";
+      }
+    }
+    elsif ( $cmd eq "del" ) {
+      RemoveInternalTimer($hash, "RCT::ValuesToAttribute");
+      InternalTimer(gettimeofday()+3, "RCT::ValuesToAttribute", $hash, 0);
+      Log3 $name, 4, "RCT ($name): set new values to standard";
     }
     RCT::RestartGetTimer($hash);
   }
