@@ -6,66 +6,393 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.0.17";
+my $version = "0.1.2";
 
 my %gets = (
   "version:noArg"     => "",
 ); 
 
+my $values = '{
+    "values":[ 
+    {
+      "name": "battery.soc",
+      "reading": "battery_soc",
+      "unit": "%",
+      "factor": 100,
+      "intervalFactor": 1
+    },
+    {
+      "name": "battery.soh",
+      "reading": "battery_soh",
+      "unit": "%",
+      "factor": 100,
+      "intervalFactor": 10
+    },
+    {
+      "name": "battery.soc_target",
+      "reading": "battery_soc_target",
+      "unit": "%",
+      "factor": 100,
+      "intervalFactor": 5
+    },
+    {
+      "name": "battery.soc_target_low",
+      "reading": "battery_soc_target_low",
+      "unit": "%",
+      "factor": 100,
+      "intervalFactor": 5
+    },
+    {
+      "name": "battery.temperature",
+      "reading": "battery_temperature",
+      "unit": "?C",
+      "factor": 1,
+      "intervalFactor": 5
+    },
+    {
+      "name": "battery.efficiency",
+      "reading": "battery_efficiency",
+      "unit": "",
+      "factor": 1,
+      "intervalFactor": 10
+    },
+    {
+      "name": "battery.used_energy",
+      "reading": "battery_used_energy",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 10
+    },
+    {
+      "name": "g_sync.p_ac_sum",
+      "reading": "power_real",
+      "unit": "W",
+      "factor": 1,
+      "intervalFactor": 1
+    },
+    {
+      "name": "g_sync.p_acc_lp",
+      "reading": "power_battery",
+      "unit": "W",
+      "factor": 1,
+      "intervalFactor": 1
+    },
+    {
+      "name": "g_sync.p_ac_grid_sum_lp",
+      "reading": "power_grid_total",
+      "unit": "W",
+      "factor": 1,
+      "intervalFactor": 1
+    },
+    {
+      "name": "g_sync.p_ac_sum_lp",
+      "reading": "power_ac",
+      "unit": "W",
+      "factor": 1,
+      "intervalFactor": 1
+    },
+    {
+      "name": "g_sync.q_ac_sum_lp",
+      "reading": "power_reactive",
+      "unit": "W",
+      "factor": 1,
+      "intervalFactor": 1
+    },
+    {
+      "name": "g_sync.p_ac[0]",
+      "reading": "power_ac1",
+      "unit": "W",
+      "factor": 1,
+      "intervalFactor": 1
+    },
+    {
+      "name": "g_sync.p_ac[1]",
+      "reading": "power_ac2",
+      "unit": "W",
+      "factor": 1,
+      "intervalFactor": 1
+    },
+    {
+      "name": "g_sync.p_ac[2]",
+      "reading": "power_ac3",
+      "unit": "W",
+      "factor": 1,
+      "intervalFactor": 1
+    },
+    {
+      "name": "dc_conv.dc_conv_struct[0].p_dc_lp",
+      "reading": "power_solarA",
+      "unit": "W",
+      "factor": 1,
+      "intervalFactor": 1
+    },
+    {
+      "name": "dc_conv.dc_conv_struct[1].p_dc_lp",
+      "reading": "power_solarB",
+      "unit": "W",
+      "factor": 1,
+      "intervalFactor": 1
+    },
+    {
+      "name": "g_sync.p_ac_load_sum_lp",
+      "reading": "power_household_external",
+      "unit": "W",
+      "factor": 1,
+      "intervalFactor": 1
+    },
+    {
+      "name": "energy.e_ac_day",
+      "reading": "energy_day",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_grid_feed_day",
+      "reading": "energy_day_grid_feed_in",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_load_day",
+      "reading": "energy_day_household",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_ext_day_sum",
+      "reading": "energy_day_external",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_grid_load_day",
+      "reading": "energy_day_grid_load",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_dc_day[0]",
+      "reading": "energy_day_solarA",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_dc_day[1]",
+      "reading": "energy_day_solarB",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_ac_month",
+      "reading": "energy_month",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_grid_feed_month",
+      "reading": "energy_month_grid_feed_in",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_load_month",
+      "reading": "energy_month_household",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_ext_month_sum",
+      "reading": "energy_month_external",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_grid_load_month",
+      "reading": "energy_month_grid_load",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_dc_month[0]",
+      "reading": "energy_month_solarA",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_dc_month[1]",
+      "reading": "energy_month_solarB",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_ac_year",
+      "reading": "energy_year",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_grid_feed_year",
+      "reading": "energy_year_grid_feed_in",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_load_year",
+      "reading": "energy_year_household",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_ext_year_sum",
+      "reading": "energy_year_external",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_grid_load_year",
+      "reading": "energy_year_grid_load",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_dc_year[0]",
+      "reading": "energy_year_solarA",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_dc_year[1]",
+      "reading": "energy_year_solarB",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_ac_total",
+      "reading": "energy_total",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_grid_feed_total",
+      "reading": "energy_total_grid_feed_in",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_load_total",
+      "reading": "energy_total_household",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_ext_total_sum",
+      "reading": "energy_total_external",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_grid_load_total",
+      "reading": "energy_total_grid_load",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_dc_total[0]",
+      "reading": "energy_total_solarA",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    },
+    {
+      "name": "energy.e_dc_total[1]",
+      "reading": "energy_total_solarB",
+      "unit": "Wh",
+      "factor": 1,
+      "intervalFactor": 2
+    }
+  ]
+}';
+
 # Commands
 my %commands;
 
-$commands{"battery_soc"} = "battery.soc";
-$commands{"battery_soh"} = "battery.soh";
-$commands{"battery_soc_target"} = "battery.soc_target";
-$commands{"battery_soc_target_low"} = "battery.soc_target_low";
-$commands{"battery_temperature"} = "battery.temperature";
-$commands{"battery_efficiency"} = "battery.efficiency";
-$commands{"battery_used_energy"} = "battery.used_energy";
+#$commands{"battery_soc"} = "battery.soc";
+#$commands{"battery_soh"} = "battery.soh";
+#$commands{"battery_soc_target"} = "battery.soc_target";
+#$commands{"battery_soc_target_low"} = "battery.soc_target_low";
+#$commands{"battery_temperature"} = "battery.temperature";
+#$commands{"battery_efficiency"} = "battery.efficiency";
+#$commands{"battery_used_energy"} = "battery.used_energy";
 
-$commands{"power_real"} = "g_sync.p_ac_sum";
-$commands{"power_battery"} = "g_sync.p_acc_lp";
-$commands{"power_grid_total"} = "g_sync.p_ac_grid_sum_lp";
-$commands{"power_ac"} = "g_sync.p_ac_sum_lp";
-$commands{"power_reactive"} = "g_sync.q_ac_sum_lp";
-$commands{"power_ac1"} = "g_sync.p_ac[0]";
-$commands{"power_ac2"} = "g_sync.p_ac[1]";
-$commands{"power_ac3"} = "g_sync.p_ac[2]";
-$commands{"power_solarA"} = "dc_conv.dc_conv_struct[0].p_dc_lp";
-$commands{"power_solarB"} = "dc_conv.dc_conv_struct[1].p_dc_lp";
-$commands{"power_household_external"} = "g_sync.p_ac_load_sum_lp";
+#$commands{"power_real"} = "g_sync.p_ac_sum";
+#$commands{"power_battery"} = "g_sync.p_acc_lp";
+#$commands{"power_grid_total"} = "g_sync.p_ac_grid_sum_lp";
+#$commands{"power_ac"} = "g_sync.p_ac_sum_lp";
+#$commands{"power_reactive"} = "g_sync.q_ac_sum_lp";
+#$commands{"power_ac1"} = "g_sync.p_ac[0]";
+#$commands{"power_ac2"} = "g_sync.p_ac[1]";
+#$commands{"power_ac3"} = "g_sync.p_ac[2]";
+#$commands{"power_solarA"} = "dc_conv.dc_conv_struct[0].p_dc_lp";
+#$commands{"power_solarB"} = "dc_conv.dc_conv_struct[1].p_dc_lp";
+#$commands{"power_household_external"} = "g_sync.p_ac_load_sum_lp";
 
-$commands{"energy_day"} = "energy.e_ac_day";
-$commands{"energy_day_grid_feed_in"} = "energy.e_grid_feed_day";
-$commands{"energy_day_household"} = "energy.e_load_day";
-$commands{"energy_day_external"} = "energy.e_ext_day_sum";
-$commands{"energy_day_grid_load"} = "energy.e_grid_load_day";
-$commands{"energy_day_solarA"} = "energy.e_dc_day[0]";
-$commands{"energy_day_solarB"} = "energy.e_dc_day[1]";
+#$commands{"energy_day"} = "energy.e_ac_day";
+#$commands{"energy_day_grid_feed_in"} = "energy.e_grid_feed_day";
+#$commands{"energy_day_household"} = "energy.e_load_day";
+#$commands{"energy_day_external"} = "energy.e_ext_day_sum";
+#$commands{"energy_day_grid_load"} = "energy.e_grid_load_day";
+#$commands{"energy_day_solarA"} = "energy.e_dc_day[0]";
+#$commands{"energy_day_solarB"} = "energy.e_dc_day[1]";
 
-$commands{"energy_month"} = "energy.e_ac_month";
-$commands{"energy_month_grid_feed_in"} = "energy.e_grid_feed_month";
-$commands{"energy_month_household"} = "energy.e_load_month";
-$commands{"energy_month_external"} = "energy.e_ext_month_sum";
-$commands{"energy_month_grid_load"} = "energy.e_grid_load_month";
-$commands{"energy_month_solarA"} = "energy.e_dc_month[0]";
-$commands{"energy_month_solarB"} = "energy.e_dc_month[1]";
+#$commands{"energy_month"} = "energy.e_ac_month";
+#$commands{"energy_month_grid_feed_in"} = "energy.e_grid_feed_month";
+#$commands{"energy_month_household"} = "energy.e_load_month";
+#$commands{"energy_month_external"} = "energy.e_ext_month_sum";
+#$commands{"energy_month_grid_load"} = "energy.e_grid_load_month";
+#$commands{"energy_month_solarA"} = "energy.e_dc_month[0]";
+#$commands{"energy_month_solarB"} = "energy.e_dc_month[1]";
 
-$commands{"energy_year"} = "energy.e_ac_year";
-$commands{"energy_year_grid_feed_in"} = "energy.e_grid_feed_year";
-$commands{"energy_year_household"} = "energy.e_load_year";
-$commands{"energy_year_external"} = "energy.e_ext_year_sum";
-$commands{"energy_year_grid_load"} = "energy.e_grid_load_year";
-$commands{"energy_year_solarA"} = "energy.e_dc_year[0]";
-$commands{"energy_year_solarB"} = "energy.e_dc_year[1]";
+#$commands{"energy_year"} = "energy.e_ac_year";
+#$commands{"energy_year_grid_feed_in"} = "energy.e_grid_feed_year";
+#$commands{"energy_year_household"} = "energy.e_load_year";
+#$commands{"energy_year_external"} = "energy.e_ext_year_sum";
+#$commands{"energy_year_grid_load"} = "energy.e_grid_load_year";
+#$commands{"energy_year_solarA"} = "energy.e_dc_year[0]";
+#$commands{"energy_year_solarB"} = "energy.e_dc_year[1]";
 
-$commands{"energy_total"} = "energy.e_ac_total";
-$commands{"energy_total_grid_feed_in"} = "energy.e_grid_feed_total";
-$commands{"energy_total_household"} = "energy.e_load_total";
-$commands{"energy_total_external"} = "energy.e_ext_total_sum";
-$commands{"energy_total_grid_load"} = "energy.e_grid_load_total";
-$commands{"energy_total_solarA"} = "energy.e_dc_total[0]";
-$commands{"energy_total_solarB"} = "energy.e_dc_total[1]";
+#$commands{"energy_total"} = "energy.e_ac_total";
+#$commands{"energy_total_grid_feed_in"} = "energy.e_grid_feed_total";
+#$commands{"energy_total_household"} = "energy.e_load_total";
+#$commands{"energy_total_external"} = "energy.e_ext_total_sum";
+#$commands{"energy_total_grid_load"} = "energy.e_grid_load_total";
+#$commands{"energy_total_solarA"} = "energy.e_dc_total[0]";
+#$commands{"energy_total_solarB"} = "energy.e_dc_total[1]";
 
 
 sub RCT_Initialize($) {
@@ -82,6 +409,7 @@ sub RCT_Initialize($) {
 	$hash->{AttrList}     =   "disable:1,0 ".
                             "disabledForIntervals ".
                             "pollInterval ".
+                            "values ".
                             $readingFnAttributes;
                             
   $hash->{NotifyOrderPrefix} = "14-";    # order number NotifyFn
@@ -187,11 +515,15 @@ sub Define($$) {
   
   delete $hash->{helper}{RUNNING_PID} if(defined($hash->{helper}{RUNNING_PID}));
   
+  
   ## start polling
 	if ($init_done && !IsDisabled($name)) {
+	  $hash->{helper}{counter}=0;
 	  readingsSingleUpdate($hash,"state","active",1);
 	  ### RCT start poll here
     RemoveInternalTimer($hash, "RCT::StartGetData");
+    RemoveInternalTimer($hash, "RCT::ValuesToAttribute");
+    InternalTimer(gettimeofday()+1, "RCT::ValuesToAttribute", $hash, 0);
     InternalTimer(gettimeofday()+2, "RCT::StartGetData", $hash, 0);
 	}
   
@@ -227,8 +559,13 @@ sub Notify ($$) {
 	
   return if(!grep(m/^INITIALIZED|REREADCFG$/, @{$dev->{CHANGED}}));
 
+  RemoveInternalTimer($hash, "RCT::ValuesToAttribute");
+  InternalTimer(gettimeofday()+1, "RCT::ValuesToAttribute", $hash, 0);
+
   RemoveInternalTimer($hash, "RCT::StartGetData");
 	InternalTimer(gettimeofday()+2, "RCT::StartGetData", $hash, 0);
+	
+	$hash->{helper}{counter}=0;
 
   return undef;
 
@@ -326,6 +663,21 @@ sub Get($@) {
   return $ret;
 }
 
+# commands to attribute
+
+sub ValuesToAttribute($hash) {
+  my ($hash) = @_;
+  
+  my $name = $hash->{NAME};
+  
+  my $attrVal="";
+  
+  if (AttrVal($name,"values","-") eq "-")  {
+    CommandAttr( undef, $name . ' values '.$values );
+  }
+  
+}
+
 # restart timers if active
 sub RestartGetTimer($) {
   my ($hash) = @_;
@@ -343,6 +695,10 @@ sub StartGetData ($) {
 	my ($hash) = @_;
 	my $name = $hash->{NAME};
   my $seconds = $hash->{"INTERVAL"};
+  
+  $hash->{helper}{counter} = 0 if (!defined($hash->{helper}{counter}) || $hash->{helper}{counter}==1000);
+  
+  $hash->{helper}{counter}++;
               
 	
 	unless(exists($hash->{helper}{RUNNING_PID})) {
@@ -393,22 +749,35 @@ sub DoGetData ($) {
 	
 	Log3 $name, 4, "RCT ($name) - DoGetData with host ".$hash->{HOST}." and port ".$hash->{PORT};
 	Log3 $name, 5, "RCT ($name) - $command";
-  
-	foreach my $key (keys %commands) {
+	
+	$values = AttrVal($name,"values",$values);
+	
+	my $decoded_json = decode_json($values);
+	
+	my @vals = @{$decoded_json->{"values"}};
 
-    $temp{$key} = qx(rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name $commands{$key});
+   
+	
+	foreach my $val (@vals) {
+	  
+	   my $mod = $hash->{helper}{counter} % $val->{intervalFactor};
+	  
+	  
+	  if ($val->{intervalFactor}!=0 && $mod==0) {
+
+      $temp{$val->{reading}} = qx(rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name $val->{name});
+      
+      if ($temp{$val->{reading}} =~ /^-?\d+\.?\d*$/){
+      
+        $temp{$val->{reading}} =~ s/^\s+|\s+$//g;
+        
+        $temp{$val->{reading}} = $temp{$val->{reading}}*$val->{factor};
+        
+        $temp{$val->{reading}} = sprintf('%.2f', $temp{$val->{reading}});
+        
+      }
     
-    if ($temp{$key} =~ /^-?\d+\.?\d*$/){
-    
-      $temp{$key} =~ s/^\s+|\s+$//g;
-      
-      $temp{$key} = $temp{$key}*100 if ($key =~ /battery_so(|h)/);
-      
-      $temp{$key} = sprintf('%.2f', $temp{$key});
-      
     }
-    
-
   }
   
   
