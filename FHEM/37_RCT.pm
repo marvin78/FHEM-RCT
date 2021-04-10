@@ -339,62 +339,6 @@ my $values = '{
   ]
 }';
 
-# Commands
-my %commands;
-
-#$commands{"battery_soc"} = "battery.soc";
-#$commands{"battery_soh"} = "battery.soh";
-#$commands{"battery_soc_target"} = "battery.soc_target";
-#$commands{"battery_soc_target_low"} = "battery.soc_target_low";
-#$commands{"battery_temperature"} = "battery.temperature";
-#$commands{"battery_efficiency"} = "battery.efficiency";
-#$commands{"battery_used_energy"} = "battery.used_energy";
-
-#$commands{"power_real"} = "g_sync.p_ac_sum";
-#$commands{"power_battery"} = "g_sync.p_acc_lp";
-#$commands{"power_grid_total"} = "g_sync.p_ac_grid_sum_lp";
-#$commands{"power_ac"} = "g_sync.p_ac_sum_lp";
-#$commands{"power_reactive"} = "g_sync.q_ac_sum_lp";
-#$commands{"power_ac1"} = "g_sync.p_ac[0]";
-#$commands{"power_ac2"} = "g_sync.p_ac[1]";
-#$commands{"power_ac3"} = "g_sync.p_ac[2]";
-#$commands{"power_solarA"} = "dc_conv.dc_conv_struct[0].p_dc_lp";
-#$commands{"power_solarB"} = "dc_conv.dc_conv_struct[1].p_dc_lp";
-#$commands{"power_household_external"} = "g_sync.p_ac_load_sum_lp";
-
-#$commands{"energy_day"} = "energy.e_ac_day";
-#$commands{"energy_day_grid_feed_in"} = "energy.e_grid_feed_day";
-#$commands{"energy_day_household"} = "energy.e_load_day";
-#$commands{"energy_day_external"} = "energy.e_ext_day_sum";
-#$commands{"energy_day_grid_load"} = "energy.e_grid_load_day";
-#$commands{"energy_day_solarA"} = "energy.e_dc_day[0]";
-#$commands{"energy_day_solarB"} = "energy.e_dc_day[1]";
-
-#$commands{"energy_month"} = "energy.e_ac_month";
-#$commands{"energy_month_grid_feed_in"} = "energy.e_grid_feed_month";
-#$commands{"energy_month_household"} = "energy.e_load_month";
-#$commands{"energy_month_external"} = "energy.e_ext_month_sum";
-#$commands{"energy_month_grid_load"} = "energy.e_grid_load_month";
-#$commands{"energy_month_solarA"} = "energy.e_dc_month[0]";
-#$commands{"energy_month_solarB"} = "energy.e_dc_month[1]";
-
-#$commands{"energy_year"} = "energy.e_ac_year";
-#$commands{"energy_year_grid_feed_in"} = "energy.e_grid_feed_year";
-#$commands{"energy_year_household"} = "energy.e_load_year";
-#$commands{"energy_year_external"} = "energy.e_ext_year_sum";
-#$commands{"energy_year_grid_load"} = "energy.e_grid_load_year";
-#$commands{"energy_year_solarA"} = "energy.e_dc_year[0]";
-#$commands{"energy_year_solarB"} = "energy.e_dc_year[1]";
-
-#$commands{"energy_total"} = "energy.e_ac_total";
-#$commands{"energy_total_grid_feed_in"} = "energy.e_grid_feed_total";
-#$commands{"energy_total_household"} = "energy.e_load_total";
-#$commands{"energy_total_external"} = "energy.e_ext_total_sum";
-#$commands{"energy_total_grid_load"} = "energy.e_grid_load_total";
-#$commands{"energy_total_solarA"} = "energy.e_dc_total[0]";
-#$commands{"energy_total_solarB"} = "energy.e_dc_total[1]";
-
-
 sub RCT_Initialize($) {
 	my ($hash) = @_;
 
