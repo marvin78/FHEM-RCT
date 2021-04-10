@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.1.3";
+my $version = "0.1.4";
 
 my %gets = (
   "version:noArg"     => "",
@@ -561,8 +561,8 @@ sub Attr($@) {
     if ( $cmd eq "set" ) {
       if (!eval{decode_json($attrVal)}) {
         return "$name: values has to be valid JSON";  
-        Log3 $name, 4, "RCT ($name): set new values to $attrVal";
       }
+      Log3 $name, 4, "RCT ($name): set new values to $attrVal";
     }
     elsif ( $cmd eq "del" ) {
       RemoveInternalTimer($hash, "RCT::ValuesToAttribute");
