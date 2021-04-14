@@ -18,7 +18,7 @@ Poll intervall:
 
 Values for readings:
 
-`{
+```{
     "values":[
     {
       "name": "battery.soc", # Wert aus Registry
@@ -30,6 +30,6 @@ Values for readings:
     },
     ...
     ]
-  }`
+  }```
 
 Support in FHEM Forums: https://forum.fhem.de/index.php/topic,120219.0.html
