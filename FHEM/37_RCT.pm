@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.1.6";
+my $version = "0.1.7";
 
 my %gets = (
   "version:noArg"     => "",
