@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.1.5";
+my $version = "0.1.6";
 
 my %gets = (
   "version:noArg"     => "",
@@ -749,11 +749,8 @@ sub DoGetData ($) {
   my $return;
   my %temp;
 
-  
-  my $command = "rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name battery.soc";
 	
 	Log3 $name, 4, "RCT ($name) - DoGetData with host ".$hash->{HOST}." and port ".$hash->{PORT};
-	Log3 $name, 5, "RCT ($name) - $command";
 	
 	$values = AttrVal($name,"values",$values);
 	
@@ -775,6 +772,8 @@ sub DoGetData ($) {
 	  if ($val->{intervalFactor}!=0 && $mod==0) {
 
       $temp{$val->{reading}} = qx(rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name $val->{name});
+      
+      Log3 $name, 5, "RCT ($name) - RAW result: ".$temp{$val->{reading}};
       
       if ($temp{$val->{reading}} =~ /^-?\d+\.?\d*$/){
       
