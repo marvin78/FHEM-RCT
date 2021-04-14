@@ -20,7 +20,7 @@ Values for readings:
 
 `attr <NAME> values <values>`
 
-`<values>` has to be in JSON-Format:
+Use the following JSON-Format for `<values>`:
 
 ```
 {
