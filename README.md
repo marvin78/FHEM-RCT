@@ -1,6 +1,6 @@
 # FHEM-RCT
 
-FHEM Module based on RCT Client: https://github.com/svalouch/python-rctclient
+FHEM Module based on RCT Client: https://pypi.org/project/rctclient/
 
 **Installation:** 
 
