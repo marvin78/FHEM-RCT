@@ -18,7 +18,12 @@ Poll intervall:
 
 Values for readings:
 
-```{
+`attr <NAME> values <values>`
+
+`<values>` has to be in JSON-Format:
+
+```
+{
     "values":[
     {
       "name": "battery.soc", # Wert aus Registry
@@ -30,6 +35,7 @@ Values for readings:
     },
     ...
     ]
-  }```
+  }
+```
 
 Support in FHEM Forums: https://forum.fhem.de/index.php/topic,120219.0.html
