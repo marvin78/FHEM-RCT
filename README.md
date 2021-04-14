@@ -20,7 +20,7 @@ Values for readings:
 
 `attr <NAME> values <values>`
 
-Use the following JSON-Format for `<values>`:
+Use the following JSON-Format for `<values>` (https://rctclient.readthedocs.io/en/latest/registry.html):
 
 ```
 {
