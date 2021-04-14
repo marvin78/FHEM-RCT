@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.1.4";
+my $version = "0.1.5";
 
 my %gets = (
   "version:noArg"     => "",
@@ -19,322 +19,368 @@ my $values = '{
       "reading": "battery_soc",
       "unit": "%",
       "factor": 100,
-      "intervalFactor": 1
+      "intervalFactor": 1,
+      "format": "%.0f"
     },
     {
       "name": "battery.soh",
       "reading": "battery_soh",
       "unit": "%",
       "factor": 100,
-      "intervalFactor": 10
+      "intervalFactor": 10,
+      "format": "%.0f"
     },
     {
       "name": "battery.soc_target",
       "reading": "battery_soc_target",
       "unit": "%",
       "factor": 100,
-      "intervalFactor": 5
+      "intervalFactor": 5,
+      "format": "%.0f"
     },
     {
       "name": "battery.soc_target_low",
       "reading": "battery_soc_target_low",
       "unit": "%",
       "factor": 100,
-      "intervalFactor": 5
+      "intervalFactor": 5,
+      "format": "%.0f"
     },
     {
       "name": "battery.temperature",
       "reading": "battery_temperature",
       "unit": "?C",
       "factor": 1,
-      "intervalFactor": 5
+      "intervalFactor": 5,
+      "format": "%.1f"
     },
     {
       "name": "battery.efficiency",
       "reading": "battery_efficiency",
       "unit": "",
       "factor": 1,
-      "intervalFactor": 10
+      "intervalFactor": 10,
+      "format": "%.2f"
     },
     {
       "name": "battery.used_energy",
       "reading": "battery_used_energy",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 10
+      "intervalFactor": 10,
+      "format": "%.0f"
     },
     {
       "name": "g_sync.p_ac_sum",
       "reading": "power_real",
       "unit": "W",
       "factor": 1,
-      "intervalFactor": 1
+      "intervalFactor": 1,
+      "format": "%.0f"
     },
     {
       "name": "g_sync.p_acc_lp",
       "reading": "power_battery",
       "unit": "W",
       "factor": 1,
-      "intervalFactor": 1
+      "intervalFactor": 1,
+      "format": "%.0f"
     },
     {
       "name": "g_sync.p_ac_grid_sum_lp",
       "reading": "power_grid_total",
       "unit": "W",
       "factor": 1,
-      "intervalFactor": 1
+      "intervalFactor": 1,
+      "format": "%.0f"
     },
     {
       "name": "g_sync.p_ac_sum_lp",
       "reading": "power_ac",
       "unit": "W",
       "factor": 1,
-      "intervalFactor": 1
+      "intervalFactor": 1,
+      "format": "%.0f"
     },
     {
       "name": "g_sync.q_ac_sum_lp",
       "reading": "power_reactive",
       "unit": "W",
       "factor": 1,
-      "intervalFactor": 1
+      "intervalFactor": 1,
+      "format": "%.0f"
     },
     {
       "name": "g_sync.p_ac[0]",
       "reading": "power_ac1",
       "unit": "W",
       "factor": 1,
-      "intervalFactor": 1
+      "intervalFactor": 1,
+      "format": "%.0f"
     },
     {
       "name": "g_sync.p_ac[1]",
       "reading": "power_ac2",
       "unit": "W",
       "factor": 1,
-      "intervalFactor": 1
+      "intervalFactor": 1,
+      "format": "%.0f"
     },
     {
       "name": "g_sync.p_ac[2]",
       "reading": "power_ac3",
       "unit": "W",
       "factor": 1,
-      "intervalFactor": 1
+      "intervalFactor": 1,
+      "format": "%.0f"
     },
     {
       "name": "dc_conv.dc_conv_struct[0].p_dc_lp",
       "reading": "power_solarA",
       "unit": "W",
       "factor": 1,
-      "intervalFactor": 1
+      "intervalFactor": 1,
+      "format": "%.0f"
     },
     {
       "name": "dc_conv.dc_conv_struct[1].p_dc_lp",
       "reading": "power_solarB",
       "unit": "W",
       "factor": 1,
-      "intervalFactor": 1
+      "intervalFactor": 1,
+      "format": "%.0f"
     },
     {
       "name": "g_sync.p_ac_load_sum_lp",
       "reading": "power_household_external",
       "unit": "W",
       "factor": 1,
-      "intervalFactor": 1
+      "intervalFactor": 1,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_ac_day",
       "reading": "energy_day",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_grid_feed_day",
       "reading": "energy_day_grid_feed_in",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_load_day",
       "reading": "energy_day_household",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_ext_day_sum",
       "reading": "energy_day_external",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_grid_load_day",
       "reading": "energy_day_grid_load",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_dc_day[0]",
       "reading": "energy_day_solarA",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_dc_day[1]",
       "reading": "energy_day_solarB",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_ac_month",
       "reading": "energy_month",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_grid_feed_month",
       "reading": "energy_month_grid_feed_in",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_load_month",
       "reading": "energy_month_household",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_ext_month_sum",
       "reading": "energy_month_external",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_grid_load_month",
       "reading": "energy_month_grid_load",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_dc_month[0]",
       "reading": "energy_month_solarA",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_dc_month[1]",
       "reading": "energy_month_solarB",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_ac_year",
       "reading": "energy_year",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_grid_feed_year",
       "reading": "energy_year_grid_feed_in",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_load_year",
       "reading": "energy_year_household",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_ext_year_sum",
       "reading": "energy_year_external",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_grid_load_year",
       "reading": "energy_year_grid_load",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_dc_year[0]",
       "reading": "energy_year_solarA",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_dc_year[1]",
       "reading": "energy_year_solarB",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_ac_total",
       "reading": "energy_total",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_grid_feed_total",
       "reading": "energy_total_grid_feed_in",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_load_total",
       "reading": "energy_total_household",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_ext_total_sum",
       "reading": "energy_total_external",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_grid_load_total",
       "reading": "energy_total_grid_load",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_dc_total[0]",
       "reading": "energy_total_solarA",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     },
     {
       "name": "energy.e_dc_total[1]",
       "reading": "energy_total_solarB",
       "unit": "Wh",
       "factor": 1,
-      "intervalFactor": 2
+      "intervalFactor": 2,
+      "format": "%.0f"
     }
   ]
 }';
@@ -719,7 +765,11 @@ sub DoGetData ($) {
 	
 	foreach my $val (@vals) {
 	  
-	   my $mod = $hash->{helper}{counter} % $val->{intervalFactor};
+	  my $iF = defined($val->{intervalFactor})?$val->{intervalFactor}:1;
+	  my $factor = defined($val->{factor})?$val->{factor}:1;
+	  my $format = defined($val->{"format"})?$val->{"format"}:0;
+	  
+	  my $mod = $hash->{helper}{counter} % $iF;
 	  
 	  
 	  if ($val->{intervalFactor}!=0 && $mod==0) {
@@ -730,9 +780,9 @@ sub DoGetData ($) {
       
         $temp{$val->{reading}} =~ s/^\s+|\s+$//g;
         
-        $temp{$val->{reading}} = $temp{$val->{reading}}*$val->{factor};
+        $temp{$val->{reading}} = $temp{$val->{reading}}*$factor;
         
-        $temp{$val->{reading}} = sprintf('%.2f', $temp{$val->{reading}});
+        $temp{$val->{reading}} = $format?(sprintf($format, $temp{$val->{reading}})):$temp{$val->{reading}};
         
       }
     
@@ -769,8 +819,6 @@ sub ProcessGetData ($) {
   for my $key (keys(%$decoded_json)) {
     if ($decoded_json->{$key} =~ /^-?\d+\.?\d*$/){
 	
-		
-      #readingsSingleUpdate($hash, $key, $decoded_json->{$key}, 1);
       readingsBulkUpdate($hash, $key, $decoded_json->{$key});
   
     }
