@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.1.7";
+my $version = "0.1.9";
 
 my %gets = (
   "version:noArg"     => "",
@@ -771,7 +771,7 @@ sub DoGetData ($) {
 	  
 	  if ($val->{intervalFactor}!=0 && $mod==0) {
 
-      $temp{$val->{reading}} = qx(rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name $val->{name});
+      QXL: $temp{$val->{reading}} = qx(rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name $val->{name});
       
       Log3 $name, 5, "RCT ($name) - RAW result: ".$temp{$val->{reading}};
       
@@ -782,6 +782,12 @@ sub DoGetData ($) {
         $temp{$val->{reading}} = $temp{$val->{reading}}*$factor;
         
         $temp{$val->{reading}} = $format?(sprintf($format, $temp{$val->{reading}})):$temp{$val->{reading}};
+        
+      }
+      # retry
+      else {
+        
+        goto QXL;
         
       }
     
@@ -797,6 +803,7 @@ sub DoGetData ($) {
 	return $name."|".$return;
 	
 }
+
 
 sub ProcessGetData ($) {
 	my ($string) = @_;
