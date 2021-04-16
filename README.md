@@ -26,11 +26,11 @@ Use the following JSON-Format for `<values>` (see: https://rctclient.readthedocs
 {
     "values":[
     {
-      "name": "battery.soc", # Wert aus Registry
-      "reading": "battery_soc", # gewünschter Readingname
-      "unit": "%", # Einheit (noch ohne Funktion)
-      "factor": 100, # Faktor für den gelesenen Wert
-      "intervalFactor": 1, # wie oft soll der Wert gelesen werden (hier jedes mal) / 10 würde bedeuten, jedes 10. mal.
+      "name": "battery.soc", # value name from registry
+      "reading": "battery_soc", # individual reading name
+      "unit": "%", # unit (will be added to reading)
+      "factor": 100, # factor for calculating the readings value
+      "intervalFactor": 1, # value is becoming read every x times
       "format": "%.1f" # sprintf format or "date". If "date" is used, the value should be linux timestamp
     },
     ...
