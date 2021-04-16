@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.2.1";
+my $version = "0.2.2";
 
 my %gets = (
   "version:noArg"     => "",
@@ -803,7 +803,7 @@ sub DoGetData ($) {
 	  
 	  if ($val->{intervalFactor}!=0 && $mod==0) {
 
-      QXL: $temp{$val->{reading}}{val} = qx(rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name $val->{name});
+      QXL: $temp{$val->{reading}}{val} = qx(rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name $val->{name} 2> /dev/null);
       
       Log3 $name, 5, "RCT ($name) - RAW result: ".$temp{$val->{reading}}{val};
       
