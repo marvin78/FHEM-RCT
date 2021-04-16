@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.2.0";
+my $version = "0.2.1";
 
 my %gets = (
   "version:noArg"     => "",
@@ -477,7 +477,10 @@ BEGIN {
           BlockingExit
           BlockingRegisterTelnet
           BC_searchTelnet
-          notifyRegexpChanged)
+          notifyRegexpChanged
+          fhemTimeLocal
+          fhemTimeGm
+          FmtDateTime)
     );
 }
 
@@ -670,7 +673,7 @@ sub Get($@) {
 
 # commands to attribute
 
-sub ValuesToAttribute($hash) {
+sub ValuesToAttribute($) {
   my ($hash) = @_;
   
   my $name = $hash->{NAME};
@@ -680,6 +683,33 @@ sub ValuesToAttribute($hash) {
   if (AttrVal($name,"values","-") eq "-")  {
     CommandAttr( undef, $name . ' values '.$values );
   }
+  
+}
+
+# format value
+
+sub GetValue($$$$) {
+  my ($hash,$val,$factor,$format) = @_;
+  
+  my $name = $hash->{NAME};
+  
+  $val =~ s/^\s+|\s+$//g;
+        
+  $val = $val*$factor;
+  
+  if ($format eq "date") {
+    Log3 $name, 4, "RCT ($name) - got date: ".$val;
+
+    $val = FmtDateTime($val);
+    Log3 $name, 4, "RCT ($name) - FHEMDate: ".$val;
+  }
+  else {
+    # sprintf
+    $val = $format ne ""?(sprintf($format, $val)):$val;
+  
+  }
+  
+  return $val;
   
 }
 
@@ -766,7 +796,7 @@ sub DoGetData ($) {
 	  
 	  my $iF = defined($val->{intervalFactor})?$val->{intervalFactor}:1;
 	  my $factor = defined($val->{factor})?$val->{factor}:1;
-	  my $format = defined($val->{"format"})?$val->{"format"}:0;
+	  my $format = defined($val->{"format"})?$val->{"format"}:"";
 	  
 	  my $mod = $hash->{helper}{counter} % $iF;
 	  
@@ -775,15 +805,12 @@ sub DoGetData ($) {
 
       QXL: $temp{$val->{reading}}{val} = qx(rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name $val->{name});
       
-      Log3 $name, 5, "RCT ($name) - RAW result: ".$temp{$val->{reading}};
+      Log3 $name, 5, "RCT ($name) - RAW result: ".$temp{$val->{reading}}{val};
       
       if ($temp{$val->{reading}}{val} =~ /^-?\d+\.?\d*$/){
       
-        $temp{$val->{reading}}{val} =~ s/^\s+|\s+$//g;
+        $temp{$val->{reading}}{val} = RCT::GetValue($hash,$temp{$val->{reading}}{val},$factor,$format);
         
-        $temp{$val->{reading}}{val} = $temp{$val->{reading}}{val}*$factor;
-        
-        $temp{$val->{reading}}{val} = $format?(sprintf($format, $temp{$val->{reading}}{val})):$temp{$val->{reading}}{val};
         
         $temp{$val->{reading}}{unit} = $val->{unit};
         
@@ -827,13 +854,13 @@ sub ProcessGetData ($) {
   readingsBeginUpdate($hash);
   
   for my $key (keys(%$decoded_json)) {
-    if ($decoded_json->{$key}{val} =~ /^-?\d+\.?\d*$/){
+
       
-      my $rV = $decoded_json->{$key}{val}.($decoded_json->{$key}{unit} ne ""?$decoded_json->{$key}{unit}:"");
+     my $rV = $decoded_json->{$key}{val}.($decoded_json->{$key}{unit} ne ""?$decoded_json->{$key}{unit}:"");
 	
-      readingsBulkUpdate($hash, $key, $rV);
+     readingsBulkUpdate($hash, $key, $rV);
   
-    }
+
   }
   
   readingsEndUpdate( $hash, 1 );
