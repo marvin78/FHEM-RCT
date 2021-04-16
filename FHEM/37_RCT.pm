@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.1.9";
+my $version = "0.2.0";
 
 my %gets = (
   "version:noArg"     => "",
@@ -17,15 +17,15 @@ my $values = '{
     {
       "name": "battery.soc",
       "reading": "battery_soc",
-      "unit": "%",
+      "unit": "",
       "factor": 100,
       "intervalFactor": 1,
-      "format": "%.0f"
+      "format": "%.1f"
     },
     {
       "name": "battery.soh",
       "reading": "battery_soh",
-      "unit": "%",
+      "unit": "",
       "factor": 100,
       "intervalFactor": 10,
       "format": "%.0f"
@@ -33,23 +33,23 @@ my $values = '{
     {
       "name": "battery.soc_target",
       "reading": "battery_soc_target",
-      "unit": "%",
+      "unit": "",
       "factor": 100,
       "intervalFactor": 5,
-      "format": "%.0f"
+      "format": "%.1f"
     },
     {
       "name": "battery.soc_target_low",
       "reading": "battery_soc_target_low",
-      "unit": "%",
+      "unit": "",
       "factor": 100,
-      "intervalFactor": 5,
-      "format": "%.0f"
+      "intervalFactor": 11,
+      "format": "%.1f"
     },
     {
       "name": "battery.temperature",
       "reading": "battery_temperature",
-      "unit": "?C",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 5,
       "format": "%.1f"
@@ -65,7 +65,7 @@ my $values = '{
     {
       "name": "battery.used_energy",
       "reading": "battery_used_energy",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 10,
       "format": "%.0f"
@@ -73,7 +73,7 @@ my $values = '{
     {
       "name": "g_sync.p_ac_sum",
       "reading": "power_real",
-      "unit": "W",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 1,
       "format": "%.0f"
@@ -81,7 +81,7 @@ my $values = '{
     {
       "name": "g_sync.p_acc_lp",
       "reading": "power_battery",
-      "unit": "W",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 1,
       "format": "%.0f"
@@ -89,7 +89,7 @@ my $values = '{
     {
       "name": "g_sync.p_ac_grid_sum_lp",
       "reading": "power_grid_total",
-      "unit": "W",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 1,
       "format": "%.0f"
@@ -97,7 +97,7 @@ my $values = '{
     {
       "name": "g_sync.p_ac_sum_lp",
       "reading": "power_ac",
-      "unit": "W",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 1,
       "format": "%.0f"
@@ -105,7 +105,7 @@ my $values = '{
     {
       "name": "g_sync.q_ac_sum_lp",
       "reading": "power_reactive",
-      "unit": "W",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 1,
       "format": "%.0f"
@@ -113,7 +113,7 @@ my $values = '{
     {
       "name": "g_sync.p_ac[0]",
       "reading": "power_ac1",
-      "unit": "W",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 1,
       "format": "%.0f"
@@ -121,7 +121,7 @@ my $values = '{
     {
       "name": "g_sync.p_ac[1]",
       "reading": "power_ac2",
-      "unit": "W",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 1,
       "format": "%.0f"
@@ -129,7 +129,7 @@ my $values = '{
     {
       "name": "g_sync.p_ac[2]",
       "reading": "power_ac3",
-      "unit": "W",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 1,
       "format": "%.0f"
@@ -137,7 +137,7 @@ my $values = '{
     {
       "name": "dc_conv.dc_conv_struct[0].p_dc_lp",
       "reading": "power_solarA",
-      "unit": "W",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 1,
       "format": "%.0f"
@@ -145,7 +145,7 @@ my $values = '{
     {
       "name": "dc_conv.dc_conv_struct[1].p_dc_lp",
       "reading": "power_solarB",
-      "unit": "W",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 1,
       "format": "%.0f"
@@ -153,7 +153,7 @@ my $values = '{
     {
       "name": "g_sync.p_ac_load_sum_lp",
       "reading": "power_household_external",
-      "unit": "W",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 1,
       "format": "%.0f"
@@ -161,7 +161,7 @@ my $values = '{
     {
       "name": "energy.e_ac_day",
       "reading": "energy_day",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -169,7 +169,7 @@ my $values = '{
     {
       "name": "energy.e_grid_feed_day",
       "reading": "energy_day_grid_feed_in",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -177,7 +177,7 @@ my $values = '{
     {
       "name": "energy.e_load_day",
       "reading": "energy_day_household",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -185,7 +185,7 @@ my $values = '{
     {
       "name": "energy.e_ext_day_sum",
       "reading": "energy_day_external",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -193,7 +193,7 @@ my $values = '{
     {
       "name": "energy.e_grid_load_day",
       "reading": "energy_day_grid_load",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -201,7 +201,7 @@ my $values = '{
     {
       "name": "energy.e_dc_day[0]",
       "reading": "energy_day_solarA",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -209,7 +209,7 @@ my $values = '{
     {
       "name": "energy.e_dc_day[1]",
       "reading": "energy_day_solarB",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -217,7 +217,7 @@ my $values = '{
     {
       "name": "energy.e_ac_month",
       "reading": "energy_month",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -225,7 +225,7 @@ my $values = '{
     {
       "name": "energy.e_grid_feed_month",
       "reading": "energy_month_grid_feed_in",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -233,7 +233,7 @@ my $values = '{
     {
       "name": "energy.e_load_month",
       "reading": "energy_month_household",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -241,7 +241,7 @@ my $values = '{
     {
       "name": "energy.e_ext_month_sum",
       "reading": "energy_month_external",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -249,7 +249,7 @@ my $values = '{
     {
       "name": "energy.e_grid_load_month",
       "reading": "energy_month_grid_load",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -257,7 +257,7 @@ my $values = '{
     {
       "name": "energy.e_dc_month[0]",
       "reading": "energy_month_solarA",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -265,7 +265,7 @@ my $values = '{
     {
       "name": "energy.e_dc_month[1]",
       "reading": "energy_month_solarB",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -273,7 +273,7 @@ my $values = '{
     {
       "name": "energy.e_ac_year",
       "reading": "energy_year",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -281,7 +281,7 @@ my $values = '{
     {
       "name": "energy.e_grid_feed_year",
       "reading": "energy_year_grid_feed_in",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -289,7 +289,7 @@ my $values = '{
     {
       "name": "energy.e_load_year",
       "reading": "energy_year_household",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -297,7 +297,7 @@ my $values = '{
     {
       "name": "energy.e_ext_year_sum",
       "reading": "energy_year_external",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -305,7 +305,7 @@ my $values = '{
     {
       "name": "energy.e_grid_load_year",
       "reading": "energy_year_grid_load",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -313,7 +313,7 @@ my $values = '{
     {
       "name": "energy.e_dc_year[0]",
       "reading": "energy_year_solarA",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -321,7 +321,7 @@ my $values = '{
     {
       "name": "energy.e_dc_year[1]",
       "reading": "energy_year_solarB",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -329,7 +329,7 @@ my $values = '{
     {
       "name": "energy.e_ac_total",
       "reading": "energy_total",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -337,7 +337,7 @@ my $values = '{
     {
       "name": "energy.e_grid_feed_total",
       "reading": "energy_total_grid_feed_in",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -345,7 +345,7 @@ my $values = '{
     {
       "name": "energy.e_load_total",
       "reading": "energy_total_household",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -353,7 +353,7 @@ my $values = '{
     {
       "name": "energy.e_ext_total_sum",
       "reading": "energy_total_external",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -361,7 +361,7 @@ my $values = '{
     {
       "name": "energy.e_grid_load_total",
       "reading": "energy_total_grid_load",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -369,7 +369,7 @@ my $values = '{
     {
       "name": "energy.e_dc_total[0]",
       "reading": "energy_total_solarA",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -377,7 +377,7 @@ my $values = '{
     {
       "name": "energy.e_dc_total[1]",
       "reading": "energy_total_solarB",
-      "unit": "Wh",
+      "unit": "",
       "factor": 1,
       "intervalFactor": 2,
       "format": "%.0f"
@@ -757,8 +757,10 @@ sub DoGetData ($) {
 	my $decoded_json = decode_json($values);
 	
 	my @vals = @{$decoded_json->{"values"}};
+	
+	Log3 $name, 5, "RCT ($name) - JSON: ".$values;
 
-   
+  Log3 $name, 5, "RCT ($name) - Array: ".Dumper(@vals); 
 	
 	foreach my $val (@vals) {
 	  
@@ -771,17 +773,19 @@ sub DoGetData ($) {
 	  
 	  if ($val->{intervalFactor}!=0 && $mod==0) {
 
-      QXL: $temp{$val->{reading}} = qx(rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name $val->{name});
+      QXL: $temp{$val->{reading}}{val} = qx(rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name $val->{name});
       
       Log3 $name, 5, "RCT ($name) - RAW result: ".$temp{$val->{reading}};
       
-      if ($temp{$val->{reading}} =~ /^-?\d+\.?\d*$/){
+      if ($temp{$val->{reading}}{val} =~ /^-?\d+\.?\d*$/){
       
-        $temp{$val->{reading}} =~ s/^\s+|\s+$//g;
+        $temp{$val->{reading}}{val} =~ s/^\s+|\s+$//g;
         
-        $temp{$val->{reading}} = $temp{$val->{reading}}*$factor;
+        $temp{$val->{reading}}{val} = $temp{$val->{reading}}{val}*$factor;
         
-        $temp{$val->{reading}} = $format?(sprintf($format, $temp{$val->{reading}})):$temp{$val->{reading}};
+        $temp{$val->{reading}}{val} = $format?(sprintf($format, $temp{$val->{reading}}{val})):$temp{$val->{reading}}{val};
+        
+        $temp{$val->{reading}}{unit} = $val->{unit};
         
       }
       # retry
@@ -823,9 +827,11 @@ sub ProcessGetData ($) {
   readingsBeginUpdate($hash);
   
   for my $key (keys(%$decoded_json)) {
-    if ($decoded_json->{$key} =~ /^-?\d+\.?\d*$/){
+    if ($decoded_json->{$key}{val} =~ /^-?\d+\.?\d*$/){
+      
+      my $rV = $decoded_json->{$key}{val}.($decoded_json->{$key}{unit} ne ""?$decoded_json->{$key}{unit}:"");
 	
-      readingsBulkUpdate($hash, $key, $decoded_json->{$key});
+      readingsBulkUpdate($hash, $key, $rV);
   
     }
   }
