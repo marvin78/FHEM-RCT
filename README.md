@@ -31,7 +31,7 @@ Use the following JSON-Format for `<values>` (see: https://rctclient.readthedocs
       "unit": "%", # Einheit (noch ohne Funktion)
       "factor": 100, # Faktor für den gelesenen Wert
       "intervalFactor": 1, # wie oft soll der Wert gelesen werden (hier jedes mal) / 10 würde bedeuten, jedes 10. mal.
-      "format": "%.1f" # if "date" is used, the value should be linux timestamp
+      "format": "%.1f" # sprintf format or "date". If "date" is used, the value should be linux timestamp
     },
     ...
     ]
