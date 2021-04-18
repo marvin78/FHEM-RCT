@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.2.2";
+my $version = "0.2.3";
 
 my %gets = (
   "version:noArg"     => "",
@@ -800,10 +800,13 @@ sub DoGetData ($) {
 	  
 	  my $mod = $hash->{helper}{counter} % $iF;
 	  
-	  
-	  if ($val->{intervalFactor}!=0 && $mod==0) {
+	  if ($val->{intervalFactor}!=0 && $mod==0) {    
+	    
+	    my $ct=0;
 
       QXL: $temp{$val->{reading}}{val} = qx(rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name $val->{name} 2> /dev/null);
+      
+      $ct++;	
       
       Log3 $name, 5, "RCT ($name) - RAW result: ".$temp{$val->{reading}}{val};
       
@@ -818,7 +821,8 @@ sub DoGetData ($) {
       # retry
       else {
         
-        goto QXL;
+        delete($temp{$val->{reading}});
+        goto QXL if ($ct<=5);
         
       }
     
