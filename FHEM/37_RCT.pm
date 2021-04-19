@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.2.3";
+my $version = "0.2.4";
 
 my %gets = (
   "version:noArg"     => "",
@@ -695,7 +695,7 @@ sub GetValue($$$$) {
   
   $val =~ s/^\s+|\s+$//g;
         
-  $val = $val*$factor;
+  $val = $val*$factor if ($val!=0);
   
   if ($format eq "date") {
     Log3 $name, 4, "RCT ($name) - got date: ".$val;
