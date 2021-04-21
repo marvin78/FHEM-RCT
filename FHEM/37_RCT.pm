@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.2.4";
+my $version = "0.2.6";
 
 my %gets = (
   "version:noArg"     => "",
@@ -806,6 +806,8 @@ sub DoGetData ($) {
 
       QXL: $temp{$val->{reading}}{val} = qx(rctclient read-value --host $hash->{HOST} --port $hash->{PORT} --name $val->{name} 2> /dev/null);
       
+      select(undef, undef, undef, 0.02);
+      
       $ct++;	
       
       Log3 $name, 5, "RCT ($name) - RAW result: ".$temp{$val->{reading}}{val};
@@ -916,13 +918,68 @@ sub ProcessAbortedGetData ($) {
 1;
 
 =pod
+=item device
+=item summary    read data from a RCT power device with help of RCT client
+=item summary_DE Mit Hilfe eines Python RCT Clients Daten aus einem RCT Power Device lesen
 =begin html
 
 <a name="RCT"></a>
 <h3>RCT</h3>
 <ul>
-  
+  FHEM Module based on RCT Client: <a href="https://pypi.org/project/rctclient/">https://pypi.org/project/rctclient/</a>
+  <br /><br />
 
+  <a id="RCT-define"></a>
+  <b>Define</b>
+  <ul>
+    <code>define &lt;NAME&gt; RCT &lt;HOST-IP&gt; [&lt;PORT&gt;]</code>
+    <br /><br />
+  </ul><br />
+  <a id="RCT-set"></a>
+  <b>Set</b>
+  <ul>
+    <a id="RCT-set-active"></a>
+    <li>active<br />
+      activates the device.</li> 
+    <a id="RCT-set-inactive"></a>
+    <li>inactive<br>
+      deactivates the device.</li>
+  </ul><br />
+  
+  <a id="RCT-get"></a>
+  <b>Get</b>
+  <ul>
+    <a id="RCT-get-version"></a>
+    <li>version<br />
+      shows the version of this module.</li> 
+  </ul><br />
+  
+  <a id="RCT-attr"></a>
+  <b>Get</b>
+  <ul>
+    <a id="RCT-attr-pollInterval"></a>
+    <li>pollInterval<br />
+      pollIntervall in seconds. Has to be at least a value of 5.</li> 
+    <a id="RCT-attr-values"></a>
+    <li>values<br />
+      values to read from the device in JSON-format. Use it like this:<br /><br />
+      <code>{
+        "values":[
+        {
+          "name": "battery.soc", # value name from registry
+          "reading": "battery_soc", # individual reading name
+          "unit": "%", # unit (will be added to reading)
+          "factor": 100, # factor for calculating the readings value
+          "intervalFactor": 1, # value is becoming read every x times
+          "format": "%.1f" # sprintf format or "date". If "date" is used, the value should be linux timestamp
+        },
+        ...
+        ]
+      }</code>
+      
+      </li> 
+  </ul><br />
+    
 </ul>
 
 =end html
