@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.2.6";
+my $version = "0.2.8";
 
 my %gets = (
   "version:noArg"     => "",
@@ -768,6 +768,8 @@ sub StartGetData ($) {
 sub DoGetData ($) {
 	my ($string) = @_;
 	#my ($name, $device) = split("\\|", $string);
+	
+	Log3 $name, 5, "RCT ($string) - Start DoGetData";
   
   my $name = $string;
 	
@@ -824,6 +826,7 @@ sub DoGetData ($) {
       else {
         
         delete($temp{$val->{reading}});
+        Log3 $name, 4, "RCT ($name) - Retry: ".$val->{name};
         goto QXL if ($ct<=5);
         
       }
@@ -951,7 +954,7 @@ sub ProcessAbortedGetData ($) {
   <ul>
     <a id="RCT-get-version"></a>
     <li>version<br />
-      shows the version of this module.</li> 
+      shows version of this module.</li> 
   </ul><br />
   
   <a id="RCT-attr"></a>
@@ -963,18 +966,18 @@ sub ProcessAbortedGetData ($) {
     <a id="RCT-attr-values"></a>
     <li>values<br />
       values to read from the device in JSON-format. Use it like this:<br /><br />
-      <code>{
-        "values":[
-        {
-          "name": "battery.soc", # value name from registry
-          "reading": "battery_soc", # individual reading name
-          "unit": "%", # unit (will be added to reading)
-          "factor": 100, # factor for calculating the readings value
-          "intervalFactor": 1, # value is becoming read every x times
-          "format": "%.1f" # sprintf format or "date". If "date" is used, the value should be linux timestamp
-        },
-        ...
-        ]
+      <code>{<br />
+        "values":[{<br />
+        {<br />
+          "name": "battery.soc", # value name from registry{<br />
+          "reading": "battery_soc", # individual reading name{<br />
+          "unit": "%", # unit (will be added to reading){<br />
+          "factor": 100, # factor for calculating the readings value{<br />
+          "intervalFactor": 1, # value is becoming read every x times{<br />
+          "format": "%.1f" # sprintf format or "date". If "date" is used, the value should be linux timestamp{<br />
+        },<br />
+        ...{<br />
+        ]<br />
       }</code>
       
       </li> 
