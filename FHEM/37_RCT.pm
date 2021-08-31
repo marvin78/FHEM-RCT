@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.2.8";
+my $version = "0.2.9";
 
 my %gets = (
   "version:noArg"     => "",
@@ -769,7 +769,7 @@ sub DoGetData ($) {
 	my ($string) = @_;
 	#my ($name, $device) = split("\\|", $string);
 	
-	Log3 $name, 5, "RCT ($string) - Start DoGetData";
+	Debug($string);
   
   my $name = $string;
 	
