@@ -770,7 +770,7 @@ sub DoGetData ($) {
 	my ($string) = @_;
 	#my ($name, $device) = split("\\|", $string);
 	
-	Debug($string);
+	#Debug($string);
   
   my $name = $string;
 	
