@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use Blocking;
 
-my $version = "0.2.9";
+my $version = "0.2.10";
 
 my %gets = (
   "version:noArg"     => "",
@@ -480,7 +480,8 @@ BEGIN {
           notifyRegexpChanged
           fhemTimeLocal
           fhemTimeGm
-          FmtDateTime)
+          FmtDateTime
+          Debug)
     );
 }
 
